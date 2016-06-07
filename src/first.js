@@ -1,4 +1,4 @@
-// @flow
+/* @flow */
 
 function name() {
   console.log('i am here');
