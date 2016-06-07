@@ -1,11 +1,12 @@
 import { expect } from 'chai';
+import { foo } from '../src/first';
 
 describe('test', () => {
   it('first', () => {
-    expect(1).to.equal(1);
+    expect(foo(1)).to.equal(10);
   });
 
   it('second', () => {
-    expect(1).to.equal(1);
+    expect(foo(2)).to.equal(20);
   });
 });
