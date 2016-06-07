@@ -1,0 +1,32 @@
+{
+  "name": "jspet",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "lint": "eslint src test",
+    "pretest": "npm run lint",
+    "test": "mocha --recursive",
+    "watch": "npm test -- --watch --growl --reporter min"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "6.0.4",
+    "chai": "3.5.0",
+    "eslint": "2.11.1",
+    "eslint-config-airbnb-base": "3.0.1",
+    "eslint-plugin-import": "1.8.1",
+    "mocha": "2.5.3",
+    "sinon": "1.17.4"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "airbnb-base",
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  }
+}
