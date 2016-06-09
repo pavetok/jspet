@@ -1,5 +1,5 @@
-import { expect } from 'chai';
-import { foo } from '../src/first';
+const expect = require('chai').expect;
+const foo = require('../src/first').foo;
 
 describe('test', () => {
   it('first', () => {
