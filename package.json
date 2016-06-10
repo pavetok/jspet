@@ -5,8 +5,9 @@
   "main": "main.js",
   "scripts": {
     "lint": "eslint src test",
-    "preverify": "npm run lint",
-    "verify": "istanbul cover _mocha",
+    "preverify": "npm run coverage",
+    "verify": "istanbul check-coverage",
+    "coverage": "istanbul cover _mocha",
     "test": "mocha --recursive",
     "watch": "npm test -- --watch --growl --reporter min"
   },
@@ -19,7 +20,6 @@
     "eslint": "2.11.1",
     "eslint-config-airbnb-base": "3.0.1",
     "eslint-plugin-import": "1.8.1",
-    "isparta": "4.0.0",
     "istanbul": "0.4.3",
     "mocha": "2.5.3",
     "sinon": "1.17.4"
