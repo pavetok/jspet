@@ -5,9 +5,9 @@
   "main": "main.js",
   "scripts": {
     "lint": "eslint src test",
-    "preverify": "npm run coverage",
+    "coverage": "istanbul cover _mocha -- --recursive src test",
+    "preverify": "npm run lint && npm run coverage",
     "verify": "istanbul check-coverage",
-    "coverage": "istanbul cover _mocha",
     "test": "mocha --recursive src test",
     "watch": "npm test -- --watch --growl --reporter min"
   },
