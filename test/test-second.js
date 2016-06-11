@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const foo = require('../src/first').foo;
 
-describe('test', () => {
+describe('second', () => {
   it('first', () => {
     expect(foo(1)).to.equal(10);
   });

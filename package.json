@@ -8,7 +8,7 @@
     "preverify": "npm run coverage",
     "verify": "istanbul check-coverage",
     "coverage": "istanbul cover _mocha",
-    "test": "mocha --recursive",
+    "test": "mocha --recursive src test",
     "watch": "npm test -- --watch --growl --reporter min"
   },
   "author": "",
@@ -29,7 +29,8 @@
     "extends": "airbnb-base",
     "env": {
       "browser": true,
-      "node": true
+      "node": true,
+      "mocha": true
     }
   }
 }
