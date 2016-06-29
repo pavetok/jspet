@@ -1,0 +1,12 @@
+language: node_js
+
+node_js:
+  - "6"
+
+script:
+  - npm run verify
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
