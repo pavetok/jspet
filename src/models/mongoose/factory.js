@@ -10,11 +10,15 @@ function modelFactory(MongooseModel) {
 
   Object.assign(that, {
     create(doc) {
-      return MongooseModel.create(doc).exec();
+      return MongooseModel.create(doc);
     },
 
     update(doc) {
       return MongooseModel.update({ _id: doc.id }, doc).exec();
+    },
+
+    removeAll() {
+      return MongooseModel.remove({}).exec();
     },
 
     findOne(query) {
