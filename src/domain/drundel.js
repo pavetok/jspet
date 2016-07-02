@@ -2,7 +2,7 @@
 
 const math = require('mathjs');
 
-const eventbus = require('./eventbus/event-emitter');
+const eventbus = require('../eventbus/event-emitter');
 
 const hrundel = Object.freeze({
   publish(eventName) {

@@ -4,10 +4,11 @@ const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const dirtyChai = require('dirty-chai');
-const expect = chai.expect;
 
-const eventbus = require('./eventbus/event-emitter');
-const drundel = require('./drundel');
+const eventbus = require('../src/eventbus/event-emitter');
+const drundel = require('../src/domain/drundel');
+
+const expect = chai.expect;
 
 chai.use(sinonChai);
 chai.use(dirtyChai);

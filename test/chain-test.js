@@ -2,10 +2,11 @@
 
 const chai = require('chai');
 const dirtyChai = require('dirty-chai');
-const expect = chai.expect;
 
 const eventbus = require('../src/eventbus/event-emitter');
-const drundel = require('../src/drundel');
+const drundel = require('../src/domain/drundel');
+
+const expect = chai.expect;
 
 chai.use(dirtyChai);
 
