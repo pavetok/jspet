@@ -8,7 +8,15 @@ const model = Object.seal({
     throw new Error('Not implemented.');
   },
 
-  findOne() {
+  update() {
+    throw new Error('Not implemented.');
+  },
+
+  remove() {
+    throw new Error('Not implemented.');
+  },
+
+  findAll() {
     throw new Error('Not implemented.');
   },
 
@@ -16,11 +24,11 @@ const model = Object.seal({
     throw new Error('Not implemented.');
   },
 
-  find() {
+  findOne() {
     throw new Error('Not implemented.');
   },
 
-  findAll() {
+  find() {
     throw new Error('Not implemented.');
   },
 });

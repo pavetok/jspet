@@ -3,6 +3,7 @@
 const math = require('mathjs');
 
 const eventbus = require('../eventbus/event-emitter');
+const drundelModel = require('../models/mongoose/drundel');
 
 const hrundel = Object.freeze({
   publish(eventName) {
@@ -32,11 +33,12 @@ function drundel(spec) {
     intervals.push(intervalId);
   });
 
-  Object.keys(events).forEach(
-    eventName => eventbus.subscribe(eventName, () => {
+  Object.keys(events).forEach(eventName =>
+    eventbus.subscribe(eventName, () => {
       const data = events[eventName];
       const expressions = typeof data === 'string' ? [data] : data;
       expressions.forEach(expression => math.compile(expression).eval(that));
+      drundelModel.update(that);
     })
   );
 

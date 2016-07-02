@@ -9,11 +9,12 @@ function modelFactory(MongooseModel) {
   const that = Object.create(model);
 
   Object.assign(that, {
-    create(spec) {
-      MongooseModel.create(spec, (err, doc) => {
-        if (err) throw err;
-        return doc;
-      });
+    create(doc) {
+      return MongooseModel.create(doc).exec();
+    },
+
+    update(doc) {
+      return MongooseModel.update({ _id: doc.id }, doc).exec();
     },
 
     findOne(query) {
