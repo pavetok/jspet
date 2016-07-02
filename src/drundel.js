@@ -1,13 +1,15 @@
+'use strict';
+
 const math = require('mathjs');
 
 const eventbus = require('./eventbus');
 
-const hrundel = {
+const hrundel = Object.freeze({
   publish(eventName) {
     // console.log('eventName: %s, P: %s, I: %s', eventName, trigger.P, trigger.I);
     eventbus.emit(eventName);
   },
-};
+});
 
 function drundel(spec) {
   const that = Object.create(hrundel);
@@ -38,9 +40,11 @@ function drundel(spec) {
     })
   );
 
-  that.clean = function clean() {
-    intervals.forEach(id => clearInterval(id));
-  };
+  Object.assign(that, {
+    clean() {
+      intervals.forEach(id => clearInterval(id));
+    },
+  });
 
   return that;
 }

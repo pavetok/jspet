@@ -2,7 +2,7 @@
   "name": "jspet",
   "version": "0.0.1",
   "description": "",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "lint": "eslint src test",
     "coverage": "istanbul cover _mocha -- --recursive src test",
@@ -14,7 +14,9 @@
   "author": "Pavel Vetokhin",
   "license": "MIT",
   "dependencies": {
-    "mathjs": "3.2.1"
+    "asyncawait": "1.0.4",
+    "mathjs": "3.2.1",
+    "mongoose": "4.5.2"
   },
   "devDependencies": {
     "babel-eslint": "6.0.4",
@@ -30,6 +32,9 @@
   },
   "eslintConfig": {
     "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "script"
+    },
     "extends": "airbnb-base",
     "env": {
       "node": true,
