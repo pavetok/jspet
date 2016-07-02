@@ -8,10 +8,9 @@ const dirtyChai = require('dirty-chai');
 const eventbus = require('../src/eventbus/event-emitter');
 const drundel = require('../src/domain/drundel');
 
-const expect = chai.expect;
-
 chai.use(sinonChai);
 chai.use(dirtyChai);
+chai.should();
 
 describe('Drundel', () => {
   let action;
@@ -34,14 +33,14 @@ describe('Drundel', () => {
     // when
     action = drundel();
     // then
-    expect(action).to.exist();
+    action.should.exist();
   });
 
   it('should be initialized with empty spec', () => {
     // when
     action = drundel(spec);
     // then
-    expect(action).to.exist();
+    action.should.exist();
   });
 
   it('should be correctly initialized', () => {
@@ -51,8 +50,8 @@ describe('Drundel', () => {
     // when
     action = drundel(spec);
     // then
-    expect(action).to.have.property('p', 1);
-    expect(action).to.not.have.property('e');
+    action.should.have.property('p', 1);
+    action.should.not.have.property('e');
   });
 
   it('should increment value after event', () => {
@@ -64,7 +63,7 @@ describe('Drundel', () => {
     // when
     eventbus.publish('e');
     // then
-    expect(action).to.have.property('p', 2);
+    action.should.have.property('p', 2);
   });
 
   it('should double value after event', () => {
@@ -76,7 +75,7 @@ describe('Drundel', () => {
     // when
     eventbus.publish('e');
     // then
-    expect(action).to.have.property('p', 4);
+    action.should.have.property('p', 4);
   });
 
   it('can handle multiple expressions', () => {
@@ -88,7 +87,7 @@ describe('Drundel', () => {
     // when
     eventbus.publish('e');
     // then
-    expect(action).to.have.property('p', 6);
+    action.should.have.property('p', 6);
   });
 
   it('can use multiple properties', () => {
@@ -101,7 +100,7 @@ describe('Drundel', () => {
     // when
     eventbus.publish('e');
     // then
-    expect(action).to.have.property('p1', 6);
+    action.should.have.property('p1', 6);
   });
 
   it('can publish event', () => {
@@ -115,7 +114,7 @@ describe('Drundel', () => {
     // when
     eventbus.publish('e');
     // then
-    expect(publish).to.have.been.calledWith(spec.props.a);
+    publish.should.have.been.calledWith(spec.props.a);
   });
 
   it('should correctly initialize triggers', done => {
@@ -140,7 +139,7 @@ describe('Drundel', () => {
     action = drundel(spec);
     // then
     setTimeout(() => {
-      expect(publish).to.not.have.been.called();
+      publish.should.not.have.been.called();
       done();
     }, interval + 1);
   });

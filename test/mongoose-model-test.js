@@ -7,7 +7,7 @@ const modelFactory = require('../src/models/mongoose/factory');
 
 chai.should();
 
-describe.only('Model', () => {
+describe('Model', () => {
   mongoose.Promise = Promise;
   const MongooseModel = mongoose.model('MongooseModel', new mongoose.Schema({
     name: String,
