@@ -2,12 +2,12 @@
 
 const math = require('mathjs');
 
-const eventbus = require('./eventbus');
+const eventbus = require('./eventbus/event-emitter');
 
 const hrundel = Object.freeze({
   publish(eventName) {
     // console.log('eventName: %s, P: %s, I: %s', eventName, trigger.P, trigger.I);
-    eventbus.emit(eventName);
+    eventbus.publish(eventName);
   },
 });
 
@@ -33,7 +33,7 @@ function drundel(spec) {
   });
 
   Object.keys(events).forEach(
-    eventName => eventbus.on(eventName, () => {
+    eventName => eventbus.subscribe(eventName, () => {
       const data = events[eventName];
       const expressions = typeof data === 'string' ? [data] : data;
       expressions.forEach(expression => math.compile(expression).eval(that));

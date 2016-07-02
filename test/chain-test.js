@@ -4,7 +4,7 @@ const chai = require('chai');
 const dirtyChai = require('dirty-chai');
 const expect = chai.expect;
 
-const eventbus = require('../src/eventbus');
+const eventbus = require('../src/eventbus/event-emitter');
 const drundel = require('../src/drundel');
 
 chai.use(dirtyChai);
@@ -25,7 +25,7 @@ describe('Action', () => {
   });
 
   afterEach(() => {
-    eventbus.removeAllListeners();
+    eventbus.cleanup();
     action1.clean();
     action2.clean();
   });

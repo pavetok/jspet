@@ -6,7 +6,7 @@ const sinonChai = require('sinon-chai');
 const dirtyChai = require('dirty-chai');
 const expect = chai.expect;
 
-const eventbus = require('./eventbus');
+const eventbus = require('./eventbus/event-emitter');
 const drundel = require('./drundel');
 
 chai.use(sinonChai);
@@ -25,7 +25,7 @@ describe('Drundel', () => {
   });
 
   afterEach(() => {
-    eventbus.removeAllListeners();
+    eventbus.cleanup();
     action.clean();
   });
 
@@ -61,7 +61,7 @@ describe('Drundel', () => {
     // and
     action = drundel(spec);
     // when
-    eventbus.emit('e');
+    eventbus.publish('e');
     // then
     expect(action).to.have.property('p', 2);
   });
@@ -73,7 +73,7 @@ describe('Drundel', () => {
     // and
     action = drundel(spec);
     // when
-    eventbus.emit('e');
+    eventbus.publish('e');
     // then
     expect(action).to.have.property('p', 4);
   });
@@ -85,7 +85,7 @@ describe('Drundel', () => {
     // and
     action = drundel(spec);
     // when
-    eventbus.emit('e');
+    eventbus.publish('e');
     // then
     expect(action).to.have.property('p', 6);
   });
@@ -98,7 +98,7 @@ describe('Drundel', () => {
     // and
     action = drundel(spec);
     // when
-    eventbus.emit('e');
+    eventbus.publish('e');
     // then
     expect(action).to.have.property('p1', 6);
   });
@@ -112,7 +112,7 @@ describe('Drundel', () => {
     // and
     const publish = sinon.spy(action, 'publish');
     // when
-    eventbus.emit('e');
+    eventbus.publish('e');
     // then
     expect(publish).to.have.been.calledWith(spec.props.a);
   });
@@ -134,12 +134,12 @@ describe('Drundel', () => {
     // and
     spec.triggers = { event1: { I: 1, P: 0 } };
     // and
-    const emit = sinon.spy(eventbus, 'emit');
+    const publish = sinon.spy(eventbus, 'publish');
     // when
     action = drundel(spec);
     // then
     setTimeout(() => {
-      expect(emit).to.not.have.been.called();
+      expect(publish).to.not.have.been.called();
       done();
     }, interval + 1);
   });
