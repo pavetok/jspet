@@ -3,13 +3,13 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
-const dirtyChai = require('dirty-chai');
+// const dirtyChai = require('dirty-chai');
 
 const eventbus = require('../src/eventbus/event-emitter');
 const drundel = require('../src/domain/drundel');
 
 chai.use(sinonChai);
-chai.use(dirtyChai);
+// chai.use(dirtyChai);
 chai.should();
 
 describe('Drundel', () => {

@@ -1,14 +1,7 @@
 'use strict';
 
-const chai = require('chai');
-const dirtyChai = require('dirty-chai');
-
 const eventbus = require('../src/eventbus/event-emitter');
 const drundel = require('../src/domain/drundel');
-
-const expect = chai.expect;
-
-chai.use(dirtyChai);
 
 describe('Action', () => {
   let action1;
@@ -32,15 +25,15 @@ describe('Action', () => {
   });
 
   it('should be correctly initialized', () => {
-    expect(action1).to.exist();
-    expect(action2).to.exist();
-    expect(action2).to.have.property('multiplier');
-    expect(action2).to.have.property('probability', 0.5);
+    action1.should.exist();
+    action2.should.exist();
+    action2.should.have.property('multiplier');
+    action2.should.have.property('probability', 0.5);
   });
 
   it('should update probability', done => {
     setTimeout(() => {
-      expect(action2.probability).to.be.above(0.5);
+      action2.probability.should.be.above(0.5);
       done();
     }, 2);
   });

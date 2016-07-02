@@ -1,11 +1,12 @@
 'use strict';
 
-const chai = require('chai');
 const mongoose = require('mongoose');
 
+const chai = require('./chai');
 const modelFactory = require('../src/models/mongoose/factory');
+const datastore = require('./datastore');
 
-chai.should();
+// chai.use(datastore);
 
 describe('Model', () => {
   mongoose.Promise = Promise;
@@ -13,7 +14,6 @@ describe('Model', () => {
     name: String,
   }));
   const testModel = modelFactory(MongooseModel);
-  const datastore = {};
   let spec;
 
   before(() => {
