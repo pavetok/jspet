@@ -8,14 +8,14 @@ function mongodb(spec) {
 
   Object.assign(that, {
     collection(name) {
-      collections.last = collections[name];
+      collections.current = collections[name];
       return that;
     },
 
     contains(doc) {
       return new Promise((resolve, reject) => {
         setImmediate(() => {
-          collections.last.count(doc, (err, count) => {
+          collections.current.count(doc, (err, count) => {
             if (err) reject(err);
             resolve(count === 1);
           });

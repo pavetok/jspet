@@ -39,8 +39,6 @@ describe('Model', () => {
     // when
     const promise = testModel.create(spec);
     // then
-    return promise.then(doc => {
-      doc.should.contain(spec);
-    });
+    return promise.should.eventually.contain(spec);
   });
 });
