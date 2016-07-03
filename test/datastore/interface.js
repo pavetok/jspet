@@ -5,6 +5,10 @@ const datastore = Object.seal({
     throw new Error('Not implemented.');
   },
 
+  create() {
+    throw new Error('Not implemented.');
+  },
+
   contains() {
     throw new Error('Not implemented.');
   },

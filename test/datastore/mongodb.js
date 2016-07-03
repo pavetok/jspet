@@ -12,6 +12,10 @@ function mongodb(spec) {
       return that;
     },
 
+    create(doc) {
+      return collections.current.create(doc);
+    },
+
     contains(doc) {
       return new Promise((resolve, reject) => {
         setImmediate(() => {
