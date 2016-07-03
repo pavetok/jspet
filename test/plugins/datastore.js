@@ -1,6 +1,6 @@
 'use strict';
 
-const collection = require('../datastore/collection');
+const datastore = require('../datastore/datastore');
 
 function getOwnMethods(object) {
   return Object.getOwnPropertyNames(object).filter(key =>
@@ -14,8 +14,7 @@ function implementation(impl) {
       const ifaceMethods = getOwnMethods(iface);
       const implemented = ifaceMethods.filter(method =>
         implMethods.indexOf(method) > -1);
-      // return implemented.length === ifaceMethods.length;
-      return implemented.length;
+      return implemented.length === ifaceMethods.length;
     },
   };
 }
@@ -31,7 +30,7 @@ module.exports = (chai, utils) => {
     originalMethod => {
       function assertContains(...args) {
         const object = flag(this, 'object');
-        if (implementation(object).of(collection)) {
+        if (implementation(object).of(datastore)) {
           object.contains(...args);
         } else {
           originalMethod.apply(this, args);
