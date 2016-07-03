@@ -2,8 +2,8 @@
 
 const mongoose = require('mongoose');
 
-const modelFactory = require('../src/models/mongoose/factory');
-const mongodb = require('./datastore/mongodb');
+const modelFactory = require('../../src/model/mongoose/factory');
+const mongodb = require('../datastore/mongodb');
 
 describe('Model', () => {
   mongoose.Promise = Promise;
@@ -21,7 +21,7 @@ describe('Model', () => {
 
   beforeEach(() => {
     spec = { name: 'chuck' };
-    return testModel.removeAll();
+    return datastore.resetAll();
   });
 
   after(() => {

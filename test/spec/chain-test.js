@@ -1,7 +1,7 @@
 'use strict';
 
-const eventbus = require('../src/eventbus/event-emitter');
-const drundel = require('../src/domain/drundel');
+const eventbus = require('../../src/eventbus/event-emitter');
+const drundel = require('../../src/domain/drundel');
 
 describe('Action', () => {
   let action1;

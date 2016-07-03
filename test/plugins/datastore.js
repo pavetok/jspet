@@ -1,6 +1,6 @@
 'use strict';
 
-const datastore = require('../datastore/datastore');
+const datastore = require('../datastore/interface');
 
 function getOwnMethods(object) {
   return Object.getOwnPropertyNames(object).filter(key =>

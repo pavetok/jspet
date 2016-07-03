@@ -2,8 +2,8 @@
 
 const sinon = require('sinon');
 
-const eventbus = require('../src/eventbus/event-emitter');
-const drundel = require('../src/domain/drundel');
+const eventbus = require('../../src/eventbus/event-emitter');
+const drundel = require('../../src/domain/drundel');
 
 describe('Drundel', () => {
   let action;

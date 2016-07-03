@@ -2,7 +2,7 @@
 
 const EventEmitter = require('events');
 
-const eventbusInterface = require('./eventbus');
+const eventbusInterface = require('./interface');
 
 /**
  * @implements {eventbus}

@@ -3,7 +3,7 @@
 const math = require('mathjs');
 
 const eventbus = require('../eventbus/event-emitter');
-const drundelModel = require('../models/mongoose/drundel');
+const drundelModel = require('../model/mongoose/drundel');
 
 const hrundel = Object.freeze({
   publish(eventName) {

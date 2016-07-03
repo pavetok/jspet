@@ -5,7 +5,7 @@ const sinonChai = require('sinon-chai');
 const chaiAsPromised = require('chai-as-promised');
 // const dirtyChai = require('dirty-chai');
 
-const datastoreChai = require('./plugins/datastore');
+const datastoreChai = require('../plugins/datastore');
 
 chai.should();
 chai.use(sinonChai);

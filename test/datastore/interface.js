@@ -8,6 +8,10 @@ const datastore = Object.seal({
   contains() {
     throw new Error('Not implemented.');
   },
+
+  resetAll() {
+    throw new Error('Not implemented.');
+  },
 });
 
 module.exports = datastore;

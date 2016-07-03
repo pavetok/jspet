@@ -1,6 +1,6 @@
 'use strict';
 
-const datastore = require('./datastore');
+const datastore = require('./interface');
 
 function mongodb(spec) {
   const that = Object.create(datastore);
@@ -21,6 +21,12 @@ function mongodb(spec) {
           });
         });
       });
+    },
+
+    resetAll() {
+      const promises = Object.keys(collections).map(name =>
+        collections[name].remove({}).exec());
+      return Promise.all(promises);
     },
   });
 

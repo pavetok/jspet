@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "lint": "eslint src test",
-    "coverage": "istanbul cover _mocha -- --recursive test",
+    "coverage": "istanbul cover -x **/*interface.js _mocha -- --recursive test/spec",
     "preverify": "npm run lint && npm run coverage",
     "verify": "istanbul check-coverage",
     "test": "mocha --recursive test",
