@@ -13,7 +13,14 @@ function mongodb(spec) {
     },
 
     contains(doc) {
-      console.log(doc);
+      return new Promise((resolve, reject) => {
+        setImmediate(() => {
+          collections.last.count(doc, (err, count) => {
+            if (err) reject(err);
+            resolve(count === 1);
+          });
+        });
+      });
     },
   });
 

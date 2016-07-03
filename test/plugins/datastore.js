@@ -31,7 +31,7 @@ module.exports = (chai, utils) => {
       function assertContains(...args) {
         const object = flag(this, 'object');
         if (implementation(object).of(datastore)) {
-          object.contains(...args);
+          return object.contains(...args).then(result => new Assertion(result).to.equal(true));
         } else {
           originalMethod.apply(this, args);
         }

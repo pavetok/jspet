@@ -30,11 +30,17 @@ describe('Model', () => {
 
   it('should create doc', () => {
     // when
+    testModel.create(spec);
+    // then
+    return datastore.collection(first).should.contain(spec);
+  });
+
+  it('should return doc', () => {
+    // when
     const promise = testModel.create(spec);
     // then
     return promise.then(doc => {
       doc.should.contain(spec);
-      datastore.collection(first).should.contain(doc);
     });
   });
 });
