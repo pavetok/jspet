@@ -1,14 +1,19 @@
 'use strict';
 
 const datastore = require('../datastore');
-const collectionFactory = require('./collection/factory');
 
-function mongodb() {
+function mongodb(spec) {
   const that = Object.create(datastore);
+  const collections = Object.assign({}, spec);
 
   Object.assign(that, {
     collection(name) {
-      return collectionFactory(name);
+      collections.last = collections[name];
+      return that;
+    },
+
+    contains(doc) {
+      console.log(doc);
     },
   });
 

@@ -8,13 +8,14 @@ function getOwnMethods(object) {
 }
 
 function implementation(impl) {
+  const implMethods = getOwnMethods(impl);
   return {
     of(iface) {
       const ifaceMethods = getOwnMethods(iface);
-      const implMethods = getOwnMethods(impl);
-      const notImplemented = ifaceMethods.filter(method =>
+      const implemented = ifaceMethods.filter(method =>
         implMethods.indexOf(method) > -1);
-      return notImplemented.length;
+      // return implemented.length === ifaceMethods.length;
+      return implemented.length;
     },
   };
 }

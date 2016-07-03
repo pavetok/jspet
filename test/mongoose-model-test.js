@@ -7,11 +7,12 @@ const mongodb = require('./datastore/mongo/db');
 
 describe('Model', () => {
   mongoose.Promise = Promise;
-  const MongooseModel = mongoose.model('Model', new mongoose.Schema({
+  const first = 'bars';
+  const MongooseModel = mongoose.model(first, new mongoose.Schema({
     name: String,
   }));
   const testModel = modelFactory(MongooseModel);
-  const datastore = mongodb();
+  const datastore = mongodb({ [first]: MongooseModel });
   let spec;
 
   before(() => {
@@ -33,7 +34,7 @@ describe('Model', () => {
     // then
     return promise.then(doc => {
       doc.should.contain(spec);
-      datastore.collection('models').should.contain(doc);
+      datastore.collection(first).should.contain(doc);
     });
   });
 });
