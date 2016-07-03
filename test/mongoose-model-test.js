@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const modelFactory = require('../src/models/mongoose/factory');
-const mongodb = require('./datastore/mongo/db');
+const mongodb = require('./datastore/mongodb');
 
 describe('Model', () => {
   mongoose.Promise = Promise;

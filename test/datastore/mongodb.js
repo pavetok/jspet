@@ -1,6 +1,6 @@
 'use strict';
 
-const datastore = require('../datastore');
+const datastore = require('./datastore');
 
 function mongodb(spec) {
   const that = Object.create(datastore);

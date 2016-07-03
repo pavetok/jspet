@@ -26,15 +26,12 @@ module.exports = (chai, utils) => {
   Assertion.overwriteChainableMethod(
     'contain',
 
-    originalMethod => {
-      function assertContains(...args) {
-        const object = flag(this, 'object');
-        if (implementation(object).of(datastore)) {
-          return object.contains(...args).then(result => new Assertion(result).to.equal(true));
-        }
-        return originalMethod.apply(this, args);
+    originalMethod => function assertContains(...args) {
+      const object = flag(this, 'object');
+      if (implementation(object).of(datastore)) {
+        return object.contains(...args).then(result => new Assertion(result).to.equal(true));
       }
-      return assertContains;
+      return originalMethod.apply(this, args);
     },
 
     originalProperty => (...args) => originalProperty.apply(this, args)
