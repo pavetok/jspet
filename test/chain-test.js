@@ -25,8 +25,8 @@ describe('Action', () => {
   });
 
   it('should be correctly initialized', () => {
-    action1.should.exist();
-    action2.should.exist();
+    action1.should.exist;
+    action2.should.exist;
     action2.should.have.property('multiplier');
     action2.should.have.property('probability', 0.5);
   });

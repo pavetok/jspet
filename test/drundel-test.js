@@ -33,14 +33,14 @@ describe('Drundel', () => {
     // when
     action = drundel();
     // then
-    action.should.exist();
+    action.should.exist;
   });
 
   it('should be initialized with empty spec', () => {
     // when
     action = drundel(spec);
     // then
-    action.should.exist();
+    action.should.exist;
   });
 
   it('should be correctly initialized', () => {
@@ -139,7 +139,7 @@ describe('Drundel', () => {
     action = drundel(spec);
     // then
     setTimeout(() => {
-      publish.should.not.have.been.called();
+      publish.should.not.have.been.called;
       done();
     }, interval + 1);
   });

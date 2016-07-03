@@ -4,16 +4,18 @@ const mongoose = require('mongoose');
 
 const chai = require('./chai');
 const modelFactory = require('../src/models/mongoose/factory');
-const datastore = require('./datastore');
+const mongodb = require('./datastore/mongo/db');
+const datastoreChai = require('./plugins/datastore');
 
-// chai.use(datastore);
+chai.use(datastoreChai);
 
 describe('Model', () => {
   mongoose.Promise = Promise;
-  const MongooseModel = mongoose.model('MongooseModel', new mongoose.Schema({
+  const MongooseModel = mongoose.model('Model', new mongoose.Schema({
     name: String,
   }));
   const testModel = modelFactory(MongooseModel);
+  const datastore = mongodb();
   let spec;
 
   before(() => {
@@ -34,7 +36,7 @@ describe('Model', () => {
     const promise = testModel.create(spec);
     // then
     return promise.then(doc => {
-      datastore.should.contain(doc);
+      datastore.collection('models').should.contain(doc);
       doc.should.contain(spec);
     });
   });
