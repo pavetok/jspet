@@ -9,19 +9,24 @@ const hrundel = Object.freeze({
   publish(channel, message) {
     eventbus.publish(channel, message);
   },
+
+  clean() {
+    this.intervals.forEach(id => clearInterval(id));
+  },
 });
 
 function drundel(spec) {
   const that = Object.create(hrundel);
-  const props = spec && spec.props || {};
-  const triggers = spec && spec.triggers || {};
-  const subscriptions = spec && spec.subscriptions || {};
 
-  Object.assign(that, props);
+  Object.assign(that, {
+    props: spec && spec.props || {},
+    triggers: spec && spec.triggers || {},
+    subscriptions: spec && spec.subscriptions || {},
+    intervals: [],
+  });
 
-  const intervals = [];
-  Object.keys(triggers).forEach(channel => {
-    const trigger = triggers[channel];
+  Object.keys(that.triggers).forEach(channel => {
+    const trigger = that.triggers[channel];
     const probability = trigger.P || 0;
     const interval = trigger.I || 1000;
     const intervalId = setInterval(() => {
@@ -29,23 +34,17 @@ function drundel(spec) {
         that.publish(channel, trigger.message);
       }
     }, interval);
-    intervals.push(intervalId);
+    that.intervals.push(intervalId);
   });
 
-  Object.keys(subscriptions).forEach(channel =>
+  Object.keys(that.subscriptions).forEach(channel =>
     eventbus.subscribe(channel, () => {
-      const data = subscriptions[channel];
+      const data = that.subscriptions[channel];
       const expressions = typeof data === 'string' ? [data] : data;
-      expressions.forEach(expression => math.compile(expression).eval(that));
+      expressions.forEach(expression => math.compile(expression).eval(that.props));
       drundelModel.update(that);
     })
   );
-
-  Object.assign(that, {
-    clean() {
-      intervals.forEach(id => clearInterval(id));
-    },
-  });
 
   return that;
 }
