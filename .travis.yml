@@ -6,6 +6,10 @@ node_js:
 services:
   - mongodb
 
+before_script:
+  - sleep 10
+  - mongod --version
+
 script:
   - npm run verify
 
