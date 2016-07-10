@@ -15,7 +15,7 @@ function drundel(spec) {
   const that = Object.create(hrundel);
   const props = spec && spec.props || {};
   const triggers = spec && spec.triggers || {};
-  const channels = spec && spec.channels || {};
+  const subscriptions = spec && spec.subscriptions || {};
 
   Object.assign(that, props);
 
@@ -32,9 +32,9 @@ function drundel(spec) {
     intervals.push(intervalId);
   });
 
-  Object.keys(channels).forEach(channel =>
+  Object.keys(subscriptions).forEach(channel =>
     eventbus.subscribe(channel, () => {
-      const data = channels[channel];
+      const data = subscriptions[channel];
       const expressions = typeof data === 'string' ? [data] : data;
       expressions.forEach(expression => math.compile(expression).eval(that));
       drundelModel.update(that);

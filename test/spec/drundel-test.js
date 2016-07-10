@@ -13,7 +13,7 @@ describe('Drundel', () => {
     spec = {
       props: {},
       triggers: {},
-      channels: {},
+      subscriptions: {},
     };
   });
 
@@ -39,7 +39,7 @@ describe('Drundel', () => {
   it('should be correctly initialized', () => {
     // given
     spec.props.p = 1;
-    spec.channels.e = 'e';
+    spec.subscriptions.e = 'e';
     // when
     action = drundel(spec);
     // then
@@ -50,7 +50,7 @@ describe('Drundel', () => {
   it('should increment value after event', () => {
     // given
     spec.props.p = 1;
-    spec.channels.e = 'p = p + 1';
+    spec.subscriptions.e = 'p = p + 1';
     // and
     action = drundel(spec);
     // when
@@ -62,7 +62,7 @@ describe('Drundel', () => {
   it('should double value after event', () => {
     // given
     spec.props.p = 2;
-    spec.channels.e = 'p = p * 2';
+    spec.subscriptions.e = 'p = p * 2';
     // and
     action = drundel(spec);
     // when
@@ -74,7 +74,7 @@ describe('Drundel', () => {
   it('can handle multiple expressions', () => {
     // given
     spec.props.p = 2;
-    spec.channels.e = ['p = p + 1', 'p = p * 2'];
+    spec.subscriptions.e = ['p = p + 1', 'p = p * 2'];
     // and
     action = drundel(spec);
     // when
@@ -87,7 +87,7 @@ describe('Drundel', () => {
     // given
     spec.props.p1 = 2;
     spec.props.p2 = 3;
-    spec.channels.e = 'p1 = p1 * p2';
+    spec.subscriptions.e = 'p1 = p1 * p2';
     // and
     action = drundel(spec);
     // when
@@ -99,7 +99,7 @@ describe('Drundel', () => {
   it('can publish event', () => {
     // given
     spec.props.a = 'a1';
-    spec.channels.e = 'publish(a)';
+    spec.subscriptions.e = 'publish(a)';
     // and
     action = drundel(spec);
     // and

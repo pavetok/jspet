@@ -10,7 +10,8 @@ const Schema = mongoose.Schema;
 const drundelSchema = new Schema({
   props: Schema.Types.Mixed,
   triggers: Schema.Types.Mixed,
-  events: Schema.Types.Mixed,
+  publications: Schema.Types.Mixed,
+  subscriptions: Schema.Types.Mixed,
 });
 
 const Drundel = utils.getOrCreate('drundel', drundelSchema);

@@ -14,7 +14,7 @@ describe('Action', () => {
 
     action2 = drundel({
       props: { probability: 0.5, multiplier: 2 },
-      channels: { channel1: 'probability = probability * multiplier' },
+      subscriptions: { channel1: 'probability = probability * multiplier' },
     });
   });
 
