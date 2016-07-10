@@ -12,6 +12,10 @@ describe('Drundel', () => {
   beforeEach(() => {
     spec = {
       props: {},
+      calcs: {
+        increment: 'p = p + 1',
+        double: 'p = p * 2',
+      },
       pubs: {},
       subs: {},
       triggers: {},
@@ -30,8 +34,10 @@ describe('Drundel', () => {
     action.should.exist;
     // and
     action.props.should.be.empty;
-    action.triggers.should.be.empty;
+    action.calcs.should.be.empty;
+    action.pubs.should.be.empty;
     action.subs.should.be.empty;
+    action.triggers.should.be.empty;
   });
 
   it('should be initialized with empty spec', () => {
@@ -40,28 +46,26 @@ describe('Drundel', () => {
     // then
     action.should.exist;
     // and
-    action.props.should.be.empty;
-    action.triggers.should.be.empty;
-    action.subs.should.be.empty;
+    action.should.contain(spec);
   });
 
   it('should be correctly initialized', () => {
     // given
-    spec.props.p = 1;
-    spec.triggers.ch2 = 'ch2';
-    spec.subs.ch1 = 'ch1';
+    spec.props.p1 = 1;
+    spec.calcs.c1 = 'c1';
+    spec.pubs.p1 = 'p1';
+    spec.triggers.t1 = 't1';
+    spec.subs.s1 = 's1';
     // when
     action = drundel(spec);
     // then
-    action.props.should.contain(spec.props);
-    action.triggers.should.contain(spec.triggers);
-    action.subs.should.contain(spec.subs);
+    action.should.contain(spec);
   });
 
-  it('should increment value after event', () => {
+  it('should increment property after event', () => {
     // given
     spec.props.p = 1;
-    spec.subs.s1 = { channel: 'ch1', ops: ['props.p = props.p + 1'] };
+    spec.subs.s1 = { channel: 'ch1', calcs: ['increment'] };
     // and
     action = drundel(spec);
     // when
@@ -70,10 +74,10 @@ describe('Drundel', () => {
     action.props.should.have.property('p', 2);
   });
 
-  it('should double value after event', () => {
+  it('should double property after event', () => {
     // given
     spec.props.p = 2;
-    spec.subs.s1 = { channel: 'ch1', ops: ['props.p = props.p * 2'] };
+    spec.subs.s1 = { channel: 'ch1', calcs: ['double'] };
     // and
     action = drundel(spec);
     // when
@@ -82,13 +86,10 @@ describe('Drundel', () => {
     action.props.should.have.property('p', 4);
   });
 
-  it('can handle multiple expressions', () => {
+  it('can make multiple calculations', () => {
     // given
     spec.props.p = 2;
-    spec.subs.s1 = { channel: 'ch1', ops: [
-      'props.p = props.p + 1',
-      'props.p = props.p * 2',
-    ] };
+    spec.subs.s1 = { channel: 'ch1', calcs: ['increment', 'double'] };
     // and
     action = drundel(spec);
     // when
@@ -101,7 +102,8 @@ describe('Drundel', () => {
     // given
     spec.props.p1 = 2;
     spec.props.p2 = 3;
-    spec.subs.s1 = { channel: 'ch1', ops: ['props.p1 = props.p1 * props.p2'] };
+    spec.calcs.multiply = 'p1 = p1 * p2';
+    spec.subs.s1 = { channel: 'ch1', calcs: ['multiply'] };
     // and
     action = drundel(spec);
     // when
@@ -110,10 +112,10 @@ describe('Drundel', () => {
     action.props.should.have.property('p1', 6);
   });
 
-  it('can publish event', () => {
+  it('can make publication', () => {
     // given
     spec.pubs.p1 = { channel: 'ch1', message: 'm1' };
-    spec.subs.s1 = { channel: 'ch2', ops: ['publish(pubs.p1)'] };
+    spec.subs.s1 = { channel: 'ch2', pubs: ['p1'] };
     // and
     action = drundel(spec);
     // and
@@ -121,12 +123,30 @@ describe('Drundel', () => {
     // when
     eventbus.publish('ch2');
     // then
-    publish.should.have.been.calledWith(spec.pubs.p1);
+    publish.should.have.been.calledWith('p1');
+  });
+
+  it('can make calculations and publications', () => {
+    // given
+    spec.props.p = 1;
+    spec.pubs.p1 = { channel: 'ch1', message: 'm1' };
+    spec.subs.s1 = { channel: 'ch2', calcs: ['increment'], pubs: ['p1'] };
+    // and
+    action = drundel(spec);
+    // and
+    const publish = sinon.spy(action, 'publish');
+    // when
+    eventbus.publish('ch2');
+    // then
+    action.props.should.have.property('p', 2);
+    // and
+    publish.should.have.been.calledWith('p1');
   });
 
   it('should correctly initialize triggers', done => {
     // given
-    spec.triggers.ch1 = { I: 1, P: 1 };
+    spec.pubs.p1 = { channel: 'ch1' };
+    spec.triggers.t1 = { pubs: ['p1'], interval: 1, probability: 1 };
     // and
     eventbus.once('ch1', done);
     // when
@@ -138,8 +158,8 @@ describe('Drundel', () => {
   it('should not trigger zero probability event', done => {
     // given
     const interval = 1;
-    // and
-    spec.triggers.ch1 = { I: 1, P: 0 };
+    spec.pubs.p1 = { channel: 'ch1' };
+    spec.triggers.t1 = { pubs: ['p1'], interval, probability: 0 };
     // and
     const publish = sinon.spy(eventbus, 'publish');
     // when
