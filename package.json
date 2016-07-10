@@ -28,6 +28,7 @@
     "eslint-plugin-import": "1.10.0",
     "istanbul": "0.4.4",
     "mocha": "2.5.3",
+    "mockgoose": "6.0.3",
     "sinon": "1.17.4",
     "sinon-chai": "2.8.0"
   },

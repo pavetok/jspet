@@ -6,8 +6,14 @@ node_js:
 services:
   - mongodb
 
+addons:
+  apt:
+    sources:
+    - mongodb-3.0-precise
+    packages:
+    - mongodb-org-server
+
 before_script:
-  - sleep 10
   - mongod --version
 
 script:
