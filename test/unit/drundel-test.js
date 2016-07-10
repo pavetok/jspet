@@ -12,10 +12,7 @@ describe('Drundel', () => {
   beforeEach(() => {
     spec = {
       props: {},
-      calcs: {
-        increment: 'p = p + 1',
-        double: 'p = p * 2',
-      },
+      calcs: {},
       pubs: {},
       subs: {},
       triggers: {},
@@ -65,6 +62,7 @@ describe('Drundel', () => {
   it('should increment property after event', () => {
     // given
     spec.props.p = 1;
+    spec.calcs.increment = 'p = p + 1';
     spec.subs.s1 = { channel: 'ch1', calcs: ['increment'] };
     // and
     action = drundel(spec);
@@ -77,6 +75,7 @@ describe('Drundel', () => {
   it('should double property after event', () => {
     // given
     spec.props.p = 2;
+    spec.calcs.double = 'p = p * 2';
     spec.subs.s1 = { channel: 'ch1', calcs: ['double'] };
     // and
     action = drundel(spec);
@@ -89,6 +88,8 @@ describe('Drundel', () => {
   it('can make multiple calculations', () => {
     // given
     spec.props.p = 2;
+    spec.calcs.increment = 'p = p + 1';
+    spec.calcs.double = 'p = p * 2';
     spec.subs.s1 = { channel: 'ch1', calcs: ['increment', 'double'] };
     // and
     action = drundel(spec);
@@ -129,6 +130,7 @@ describe('Drundel', () => {
   it('can make calculations and publications', () => {
     // given
     spec.props.p = 1;
+    spec.calcs.increment = 'p = p + 1';
     spec.pubs.p1 = { channel: 'ch1', message: 'm1' };
     spec.subs.s1 = { channel: 'ch2', calcs: ['increment'], pubs: ['p1'] };
     // and
