@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint no-underscore-dangle: 0 */
+
 const model = require('../interface');
 
 /**
@@ -14,7 +16,7 @@ function modelFactory(MongooseModel) {
     },
 
     update(doc) {
-      return MongooseModel.update({ _id: doc.id }, doc).exec();
+      return MongooseModel.update({ _id: doc._id }, doc).exec();
     },
   });
 
