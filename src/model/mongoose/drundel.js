@@ -1,6 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
+
+const utils = require('./utils');
 const modelFactory = require('./factory');
 
 const Schema = mongoose.Schema;
@@ -11,7 +13,7 @@ const drundelSchema = new Schema({
   events: Schema.Types.Mixed,
 });
 
-const Drundel = mongoose.model('Drundel', drundelSchema);
+const Drundel = utils.getOrCreate('drundel', drundelSchema);
 
 const drundel = modelFactory(Drundel);
 

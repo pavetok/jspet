@@ -9,12 +9,12 @@ describe('Action', () => {
 
   beforeEach(() => {
     action1 = drundel({
-      triggers: { event1: { I: 1, P: 1 } },
+      triggers: { channel1: { I: 1, P: 1 } },
     });
 
     action2 = drundel({
       props: { probability: 0.5, multiplier: 2 },
-      events: { event1: 'probability = probability * multiplier' },
+      channels: { channel1: 'probability = probability * multiplier' },
     });
   });
 

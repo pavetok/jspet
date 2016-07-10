@@ -1,18 +1,20 @@
 'use strict';
 
+/* eslint no-unused-vars: 0 */
+
 /**
  * @interface
  */
 const model = Object.seal({
-  create() {
+  create(doc) {
     throw new Error('Not implemented.');
   },
 
-  update() {
+  update(doc) {
     throw new Error('Not implemented.');
   },
 
-  remove() {
+  remove(doc) {
     throw new Error('Not implemented.');
   },
 
@@ -20,15 +22,15 @@ const model = Object.seal({
     throw new Error('Not implemented.');
   },
 
-  findById() {
+  findById(id) {
     throw new Error('Not implemented.');
   },
 
-  findOne() {
+  findOne(query) {
     throw new Error('Not implemented.');
   },
 
-  find() {
+  find(query) {
     throw new Error('Not implemented.');
   },
 

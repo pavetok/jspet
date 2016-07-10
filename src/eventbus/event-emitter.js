@@ -12,16 +12,16 @@ function eventbusFactory() {
   const eventEmitter = new EventEmitter();
 
   Object.assign(that, {
-    publish(eventName) {
-      eventEmitter.emit(eventName);
+    publish(channel, message) {
+      eventEmitter.emit(channel, message);
     },
 
-    once(eventName, listener) {
-      eventEmitter.once(eventName, listener);
+    once(channel, handler) {
+      eventEmitter.once(channel, handler);
     },
 
-    subscribe(eventName, listener) {
-      eventEmitter.on(eventName, listener);
+    subscribe(channel, handler) {
+      eventEmitter.on(channel, handler);
     },
 
     cleanup() {

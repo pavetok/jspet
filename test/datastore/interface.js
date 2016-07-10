@@ -1,15 +1,17 @@
 'use strict';
 
+/* eslint no-unused-vars: 0 */
+
 const datastore = Object.seal({
-  collection() {
+  collection(name) {
     throw new Error('Not implemented.');
   },
 
-  create() {
+  create(doc) {
     throw new Error('Not implemented.');
   },
 
-  contains() {
+  contains(doc) {
     throw new Error('Not implemented.');
   },
 

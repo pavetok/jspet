@@ -1,18 +1,20 @@
 'use strict';
 
+/* eslint no-unused-vars: 0 */
+
 /**
  * @interface
  */
 const eventbus = Object.seal({
-  publish() {
+  publish(channel, message) {
     throw new Error('Not implemented.');
   },
 
-  once() {
+  once(channel, handler) {
     throw new Error('Not implemented.');
   },
 
-  subscribe() {
+  subscribe(channel, handler) {
     throw new Error('Not implemented.');
   },
 

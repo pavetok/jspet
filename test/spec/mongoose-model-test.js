@@ -2,15 +2,17 @@
 
 const mongoose = require('mongoose');
 
+const utils = require('../../src/model/mongoose/utils');
 const modelFactory = require('../../src/model/mongoose/factory');
 const mongodb = require('../datastore/mongodb');
 
 describe('Model', () => {
   mongoose.Promise = Promise;
   const one = 'bars';
-  const MongooseModel = mongoose.model(one, new mongoose.Schema({
+  const schema = new mongoose.Schema({
     name: String,
-  }));
+  });
+  const MongooseModel = utils.getOrCreate(one, schema);
   const testModel = modelFactory(MongooseModel);
   const datastore = mongodb({ [one]: MongooseModel });
   let spec;

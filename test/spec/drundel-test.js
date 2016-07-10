@@ -13,7 +13,7 @@ describe('Drundel', () => {
     spec = {
       props: {},
       triggers: {},
-      events: {},
+      channels: {},
     };
   });
 
@@ -39,7 +39,7 @@ describe('Drundel', () => {
   it('should be correctly initialized', () => {
     // given
     spec.props.p = 1;
-    spec.events.e = 'e';
+    spec.channels.e = 'e';
     // when
     action = drundel(spec);
     // then
@@ -50,7 +50,7 @@ describe('Drundel', () => {
   it('should increment value after event', () => {
     // given
     spec.props.p = 1;
-    spec.events.e = 'p = p + 1';
+    spec.channels.e = 'p = p + 1';
     // and
     action = drundel(spec);
     // when
@@ -62,7 +62,7 @@ describe('Drundel', () => {
   it('should double value after event', () => {
     // given
     spec.props.p = 2;
-    spec.events.e = 'p = p * 2';
+    spec.channels.e = 'p = p * 2';
     // and
     action = drundel(spec);
     // when
@@ -74,7 +74,7 @@ describe('Drundel', () => {
   it('can handle multiple expressions', () => {
     // given
     spec.props.p = 2;
-    spec.events.e = ['p = p + 1', 'p = p * 2'];
+    spec.channels.e = ['p = p + 1', 'p = p * 2'];
     // and
     action = drundel(spec);
     // when
@@ -87,7 +87,7 @@ describe('Drundel', () => {
     // given
     spec.props.p1 = 2;
     spec.props.p2 = 3;
-    spec.events.e = 'p1 = p1 * p2';
+    spec.channels.e = 'p1 = p1 * p2';
     // and
     action = drundel(spec);
     // when
@@ -99,7 +99,7 @@ describe('Drundel', () => {
   it('can publish event', () => {
     // given
     spec.props.a = 'a1';
-    spec.events.e = 'publish(a)';
+    spec.channels.e = 'publish(a)';
     // and
     action = drundel(spec);
     // and
@@ -112,9 +112,9 @@ describe('Drundel', () => {
 
   it('should correctly initialize triggers', done => {
     // given
-    spec.triggers = { event1: { I: 1, P: 1 } };
+    spec.triggers = { channel1: { I: 1, P: 1 } };
     // and
-    eventbus.once('event1', done);
+    eventbus.once('channel1', done);
     // when
     action = drundel(spec);
     // then
@@ -125,7 +125,7 @@ describe('Drundel', () => {
     // given
     const interval = 1;
     // and
-    spec.triggers = { event1: { I: 1, P: 0 } };
+    spec.triggers = { channel1: { I: 1, P: 0 } };
     // and
     const publish = sinon.spy(eventbus, 'publish');
     // when
