@@ -6,8 +6,8 @@ const eventbus = require('../eventbus/event-emitter');
 
 const hrundel = Object.freeze({
   publish(name) {
-    const pub = this.pubs[name];
-    eventbus.publish(pub.channel, pub.message);
+    const event = this.events[name];
+    eventbus.publish(event.channel, event.message);
   },
 
   clean() {
@@ -21,7 +21,7 @@ function drundel(spec) {
   Object.assign(that, {
     props: spec && spec.props || {},
     calcs: spec && spec.calcs || {},
-    pubs: spec && spec.pubs || {},
+    events: spec && spec.events || {},
     subs: spec && spec.subs || {},
     triggers: spec && spec.triggers || {},
     intervals: [],
@@ -29,24 +29,27 @@ function drundel(spec) {
 
   Object.keys(that.triggers).forEach(triggerName => {
     const trigger = that.triggers[triggerName];
-    const pubs = trigger.pubs;
+    const events = trigger.events || [];
     const probability = trigger.probability || 0;
     const interval = trigger.interval || 1000;
     const intervalId = setInterval(() => {
       if (probability > Math.random()) {
-        pubs.forEach(pubName => that.publish(pubName));
+        events.forEach(eventName => that.publish(eventName));
       }
     }, interval);
     that.intervals.push(intervalId);
   });
 
   Object.keys(that.subs).forEach(subName => {
-    const subscription = that.subs[subName];
-    const calcs = subscription.calcs || [];
-    const pubs = subscription.pubs || [];
-    eventbus.subscribe(subscription.channel, () => {
-      calcs.forEach(calcName => math.compile(that.calcs[calcName]).eval(that.props));
-      pubs.forEach(pubName => that.publish(pubName));
+    const sub = that.subs[subName];
+    const calcs = sub.calcs || [];
+    const inputs = sub.inputs || [];
+    const outputs = sub.outputs || [];
+    inputs.forEach(inputEvent => {
+      eventbus.subscribe(that.events[inputEvent].channel, () => {
+        calcs.forEach(calcName => math.compile(that.calcs[calcName]).eval(that.props));
+        outputs.forEach(outputEvent => that.publish(outputEvent));
+      });
     });
   });
 
