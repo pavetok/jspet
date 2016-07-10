@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const utils = require('../../src/model/mongoose/utils');
 const modelFactory = require('../../src/model/mongoose/factory');
-const mongodb = require('../datastore/mongodb');
+const mongodb = require('../lib/datastore/mongodb');
 
 describe('Model', () => {
   mongoose.Promise = Promise;
