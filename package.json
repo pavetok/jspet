@@ -14,7 +14,8 @@
   "author": "Pavel Vetokhin",
   "license": "MIT",
   "dependencies": {
-    "mathjs": "3.2.1"
+    "mathjs": "3.2.1",
+    "mongoose": "4.5.3"
   },
   "devDependencies": {
     "babel-eslint": "6.1.0",
