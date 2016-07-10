@@ -6,8 +6,8 @@ const eventbus = require('../eventbus/event-emitter');
 const drundelModel = require('../model/mongoose/drundel');
 
 const hrundel = Object.freeze({
-  publish(channel, message) {
-    eventbus.publish(channel, message);
+  publish(event) {
+    eventbus.publish(event.channel, event.message);
   },
 
   clean() {
@@ -20,8 +20,9 @@ function drundel(spec) {
 
   Object.assign(that, {
     props: spec && spec.props || {},
+    pubs: spec && spec.pubs || {},
+    subs: spec && spec.subs || {},
     triggers: spec && spec.triggers || {},
-    subscriptions: spec && spec.subscriptions || {},
     intervals: [],
   });
 
@@ -29,22 +30,22 @@ function drundel(spec) {
     const trigger = that.triggers[channel];
     const probability = trigger.P || 0;
     const interval = trigger.I || 1000;
+    const message = trigger.message;
     const intervalId = setInterval(() => {
       if (probability > Math.random()) {
-        that.publish(channel, trigger.message);
+        that.publish({ channel, message });
       }
     }, interval);
     that.intervals.push(intervalId);
   });
 
-  Object.keys(that.subscriptions).forEach(channel =>
-    eventbus.subscribe(channel, () => {
-      const data = that.subscriptions[channel];
-      const expressions = typeof data === 'string' ? [data] : data;
-      expressions.forEach(expression => math.compile(expression).eval(that.props));
+  Object.keys(that.subs).forEach(name => {
+    const s = that.subs[name];
+    eventbus.subscribe(s.channel, () => {
+      s.ops.forEach(expression => math.compile(expression).eval(that));
       drundelModel.update(that);
-    })
-  );
+    });
+  });
 
   return that;
 }

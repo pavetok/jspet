@@ -12,8 +12,9 @@ describe('Drundel', () => {
   beforeEach(() => {
     spec = {
       props: {},
+      pubs: {},
+      subs: {},
       triggers: {},
-      subscriptions: {},
     };
   });
 
@@ -30,7 +31,7 @@ describe('Drundel', () => {
     // and
     action.props.should.be.empty;
     action.triggers.should.be.empty;
-    action.subscriptions.should.be.empty;
+    action.subs.should.be.empty;
   });
 
   it('should be initialized with empty spec', () => {
@@ -41,26 +42,26 @@ describe('Drundel', () => {
     // and
     action.props.should.be.empty;
     action.triggers.should.be.empty;
-    action.subscriptions.should.be.empty;
+    action.subs.should.be.empty;
   });
 
   it('should be correctly initialized', () => {
     // given
     spec.props.p = 1;
     spec.triggers.ch2 = 'ch2';
-    spec.subscriptions.ch1 = 'ch1';
+    spec.subs.ch1 = 'ch1';
     // when
     action = drundel(spec);
     // then
     action.props.should.contain(spec.props);
     action.triggers.should.contain(spec.triggers);
-    action.subscriptions.should.contain(spec.subscriptions);
+    action.subs.should.contain(spec.subs);
   });
 
   it('should increment value after event', () => {
     // given
     spec.props.p = 1;
-    spec.subscriptions.ch1 = 'p = p + 1';
+    spec.subs.s1 = { channel: 'ch1', ops: ['props.p = props.p + 1'] };
     // and
     action = drundel(spec);
     // when
@@ -72,7 +73,7 @@ describe('Drundel', () => {
   it('should double value after event', () => {
     // given
     spec.props.p = 2;
-    spec.subscriptions.ch1 = 'p = p * 2';
+    spec.subs.s1 = { channel: 'ch1', ops: ['props.p = props.p * 2'] };
     // and
     action = drundel(spec);
     // when
@@ -84,7 +85,10 @@ describe('Drundel', () => {
   it('can handle multiple expressions', () => {
     // given
     spec.props.p = 2;
-    spec.subscriptions.ch1 = ['p = p + 1', 'p = p * 2'];
+    spec.subs.s1 = { channel: 'ch1', ops: [
+      'props.p = props.p + 1',
+      'props.p = props.p * 2',
+    ] };
     // and
     action = drundel(spec);
     // when
@@ -97,7 +101,7 @@ describe('Drundel', () => {
     // given
     spec.props.p1 = 2;
     spec.props.p2 = 3;
-    spec.subscriptions.ch1 = 'p1 = p1 * p2';
+    spec.subs.s1 = { channel: 'ch1', ops: ['props.p1 = props.p1 * props.p2'] };
     // and
     action = drundel(spec);
     // when
@@ -108,8 +112,8 @@ describe('Drundel', () => {
 
   it('can publish event', () => {
     // given
-    spec.events.ch1 = 'message';
-    spec.subscriptions.ch2 = 'publish(ch1)';
+    spec.pubs.p1 = { channel: 'ch1', message: 'm1' };
+    spec.subs.s1 = { channel: 'ch2', ops: ['publish(pubs.p1)'] };
     // and
     action = drundel(spec);
     // and
@@ -117,7 +121,7 @@ describe('Drundel', () => {
     // when
     eventbus.publish('ch2');
     // then
-    publish.should.have.been.calledWith('ch1', 'message');
+    publish.should.have.been.calledWith(spec.pubs.p1);
   });
 
   it('should correctly initialize triggers', done => {
