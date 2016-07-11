@@ -164,6 +164,7 @@ describe('Drundel', () => {
   it('should not trigger zero probability event', done => {
     // given
     const interval = 1;
+    // and
     spec.triggers.t1 = { events: ['e1'], interval, probability: 0 };
     // and
     const publish = sinon.spy(eventbus, 'publish');
