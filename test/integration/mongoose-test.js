@@ -7,20 +7,16 @@ const modelFactory = require('../../src/model/mongoose/factory');
 const mongodb = require('../lib/datastore/mongodb');
 
 describe('Model', () => {
-  mongoose.Promise = Promise;
   const one = 'bars';
+  const connection = mongoose.createConnection('mongodb://localhost/test');
   const schema = new mongoose.Schema({
     name: String,
   });
-  const MongooseModel = utils.getOrCreate(one, schema);
+  const MongooseModel = utils.getOrCreate(connection, one, schema);
   const testModel = modelFactory(MongooseModel);
   const datastore = mongodb({ [one]: MongooseModel });
   let spec;
   let doc;
-
-  before(() => {
-    mongoose.connect('mongodb://localhost/test');
-  });
 
   beforeEach(() => datastore.resetAll());
 
@@ -32,7 +28,7 @@ describe('Model', () => {
   });
 
   after(() => {
-    mongoose.connection.close();
+    connection.close();
   });
 
   it('should create doc in datastore', () =>

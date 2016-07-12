@@ -7,7 +7,8 @@ const modelFactory = require('./factory');
 
 const Schema = mongoose.Schema;
 
-const drundelSchema = new Schema({
+const entitySchema = new Schema({
+  type: String,
   props: Schema.Types.Mixed,
   calcs: Schema.Types.Mixed,
   events: Schema.Types.Mixed,
@@ -15,9 +16,9 @@ const drundelSchema = new Schema({
   triggers: Schema.Types.Mixed,
 });
 
-function drundelModelFactory(connection, collection) {
-  const MongooseModel = utils.getOrCreate(connection, collection, drundelSchema);
+function entityFactory(connection) {
+  const MongooseModel = utils.getOrCreate(connection, 'entity', entitySchema);
   return modelFactory(MongooseModel);
 }
 
-module.exports = drundelModelFactory;
+module.exports = entityFactory;

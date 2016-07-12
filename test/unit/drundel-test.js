@@ -6,6 +6,7 @@ const eventbus = require('../../src/eventbus/event-emitter');
 const drundel = require('../../src/domain/drundel');
 
 describe('Drundel', () => {
+  const drundelFactory = drundel();
   let action;
   let spec;
 
@@ -31,7 +32,7 @@ describe('Drundel', () => {
 
   it('should be initialized without spec', () => {
     // when
-    action = drundel();
+    action = drundelFactory();
     // then
     action.should.exist;
     // and
@@ -50,7 +51,7 @@ describe('Drundel', () => {
     spec.events = {};
     spec.triggers = {};
     // when
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // then
     action.should.exist;
     // and
@@ -65,7 +66,7 @@ describe('Drundel', () => {
     spec.events.e1 = 'e1';
     spec.triggers.t1 = 't1';
     // when
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // then
     action.should.contain(spec);
   });
@@ -74,7 +75,7 @@ describe('Drundel', () => {
     // given
     spec.subs.s1 = { inputs: ['e1'], calcs: ['increment'] };
     // and
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // when
     eventbus.publish(spec.events.e1.channel);
     // then
@@ -85,7 +86,7 @@ describe('Drundel', () => {
     // given
     spec.subs.s1 = { inputs: ['e1'], calcs: ['double'] };
     // and
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // when
     eventbus.publish(spec.events.e1.channel);
     // then
@@ -96,7 +97,7 @@ describe('Drundel', () => {
     // given
     spec.subs.s1 = { inputs: ['e1'], calcs: ['increment', 'double'] };
     // and
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // when
     eventbus.publish(spec.events.e1.channel);
     // then
@@ -110,7 +111,7 @@ describe('Drundel', () => {
     spec.calcs.multiply = 'p1 = p1 * p2';
     spec.subs.s1 = { inputs: ['e1'], calcs: ['multiply'] };
     // and
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // when
     eventbus.publish(spec.events.e1.channel);
     // then
@@ -123,7 +124,7 @@ describe('Drundel', () => {
     spec.events.e2 = { channel: 'ch2' };
     spec.subs.s1 = { inputs: ['e1'], outputs: ['e2'] };
     // and
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // and
     const publish = sinon.spy(action, 'publish');
     // when
@@ -139,7 +140,7 @@ describe('Drundel', () => {
     spec.events.e2 = { channel: 'ch2' };
     spec.subs.s1 = { inputs: ['e1'], calcs: ['increment'], outputs: ['e2'] };
     // and
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // and
     const publish = sinon.spy(action, 'publish');
     // when
@@ -156,7 +157,7 @@ describe('Drundel', () => {
     // and
     eventbus.once(spec.events.e1.channel, done);
     // when
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // then
     // done() should be called
   });
@@ -169,7 +170,7 @@ describe('Drundel', () => {
     // and
     const publish = sinon.spy(eventbus, 'publish');
     // when
-    action = drundel(spec);
+    action = drundelFactory(spec);
     // then
     setTimeout(() => {
       publish.should.not.have.been.called;
