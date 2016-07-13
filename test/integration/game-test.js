@@ -28,23 +28,20 @@ describe('Game', () => {
   beforeEach(() => {
     drundel = {
       props: {},
-      calcs: {},
-      events: {},
-      subs: {},
-      triggers: {},
     };
   });
 
   beforeEach(() => Promise.all([
     entityModel.removeAll(),
     drundelModel.removeAll(),
+  ]));
+
+  beforeEach(() => Promise.all([
     entityModel.create(entity),
     drundelModel.create(drundel),
   ]));
 
-  beforeEach(() => {
-    return game.start();
-  });
+  beforeEach(() => game.start());
 
   afterEach(() => {
     game.stop();

@@ -21,11 +21,12 @@ function game() {
     start() {
       return async(() => {
         const entities = await(entityModel.findAll());
-        entities.forEach(entity => drundelService.drundelize(entity));
+        entities.forEach(drundelService.drundelize);
       })();
     },
 
     stop() {
+      drundelService.destroy();
       connection.close();
     },
   });

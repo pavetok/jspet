@@ -1,17 +1,18 @@
 'use strict';
 
+
 const math = require('mathjs');
 
 const eventbus = require('../eventbus/event-emitter');
 
-function drundel(prototype) {
+function drundelator(prototype) {
   const hrundel = prototype || {};
   Object.assign(hrundel, {
+    props: hrundel.props || {},
     publish(name) {
       const event = this.events[name];
       eventbus.publish(event.channel, event.message);
     },
-
     clean() {
       this.intervals.forEach(id => clearInterval(id));
     },
@@ -21,7 +22,7 @@ function drundel(prototype) {
     const that = Object.create(hrundel);
     Object.assign(that, {
       _id: spec && spec._id,
-      props: spec && spec.props || {},
+      props: Object.assign(Object.create(hrundel.props), spec && spec.props),
       calcs: spec && spec.calcs || {},
       events: spec && spec.events || {},
       subs: spec && spec.subs || {},
@@ -59,4 +60,4 @@ function drundel(prototype) {
   };
 }
 
-module.exports = drundel;
+module.exports = drundelator;

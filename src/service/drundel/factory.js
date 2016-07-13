@@ -4,7 +4,7 @@ const async = require('asyncawait/async');
 const await = require('asyncawait/await');
 
 const drundelModelFactory = require('../../model/mongoose/drundel');
-const drundel = require('../../domain/drundel');
+const drundel = require('../../domain/drundelator');
 
 function drundelServiceFactory(connection) {
   const that = {};
