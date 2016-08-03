@@ -7,14 +7,21 @@ const eventbus = require('../eventbus/event-emitter');
 
 function drundelator(prototype) {
   const hrundel = prototype || {};
+
   Object.assign(hrundel, {
     props: hrundel.props || {},
+    calcs: hrundel.calcs || {},
+    events: hrundel.events || {},
+    subs: hrundel.subs || {},
+    triggers: hrundel.triggers || {},
+
     publish(name) {
       const event = this.events[name];
       eventbus.publish(event.channel, event.message);
     },
+
     clean() {
-      this.intervals.forEach(id => clearInterval(id));
+      this.intervals.forEach(clearInterval);
     },
   });
 
@@ -23,10 +30,10 @@ function drundelator(prototype) {
     Object.assign(that, {
       _id: spec && spec._id,
       props: Object.assign(Object.create(hrundel.props), spec && spec.props),
-      calcs: spec && spec.calcs || {},
-      events: spec && spec.events || {},
-      subs: spec && spec.subs || {},
-      triggers: spec && spec.triggers || {},
+      calcs: Object.assign(Object.create(hrundel.calcs), spec && spec.calcs),
+      events: Object.assign(Object.create(hrundel.events), spec && spec.events),
+      subs: Object.assign(Object.create(hrundel.subs), spec && spec.subs),
+      triggers: Object.assign(Object.create(hrundel.triggers), spec && spec.triggers),
       intervals: [],
     });
 

@@ -105,12 +105,19 @@ describe('Drundel', () => {
     it('with non-empty prototype and empty spec', () => {
       // given
       prototype.props.p1 = 1;
-      prototype.props.p2 = 2;
+      prototype.calcs.c1 = 'c1';
+      prototype.subs.s1 = 's1';
+      prototype.events.e1 = 'e1';
+      prototype.triggers.t1 = 't1';
       // when
       drundel = drundelator(prototype)(emptySpec);
       // then
       drundel.props.should.have.property('p1', 1);
-      drundel.props.should.have.property('p2', 2);
+      drundel.calcs.c1.should.exist;
+      drundel.calcs.should.have.property('c1', 'c1');
+      drundel.subs.should.have.property('s1', 's1');
+      drundel.events.should.have.property('e1', 'e1');
+      drundel.triggers.should.have.property('t1', 't1');
     });
 
     it('with non-empty prototype and non-empty spec', () => {
@@ -223,8 +230,9 @@ describe('Drundel', () => {
   it('should not trigger zero probability event', done => {
     // given
     const interval = 1;
+    const probability = 0;
     // and
-    spec.triggers.t1 = { events: ['e1'], interval, probability: 0 };
+    spec.triggers.t1 = { events: ['e1'], interval, probability };
     // and
     const publish = sinon.spy(eventbus, 'publish');
     // when
